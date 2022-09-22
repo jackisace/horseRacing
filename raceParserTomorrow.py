@@ -11,7 +11,6 @@ import time
 
 
 def cleanUp(st):
-    print(st)
     st = st.replace("\n", "")
     while st[0] == " ":
         st = st[1:]
@@ -205,19 +204,21 @@ def parsePage(racePageHtml, raceURL):
 
     # class="rp-horseTable__horse__price"
     #print(soup)  data-diffusion-fractional
-    prices = []
+    #prices = []
     #item = soup.find('div', {'data-test-selector':"text-prizeMoney"})
-    for item in soup.find_all("a", class_="RC-runnerPrice"):
-        a = str(item)
-        if 'data-diffusion-fractional' in a:
-            
-            a = a.split('data-diffusion-fractional')[1]
-            a = a.split('"')[0]
-            prices.append(a)
+    #for item in soup.find_all("a", class_="RC-runnerPrice"):
+    #    a = str(item)
+    #    if 'data-diffusion-fractional' in a:
+    #        
+    #        a = a.split('data-diffusion-fractional')[1]
+    #        a = a.split('"')[0]
+    #        prices.append(a)
 
         
     # rp-horseTable__horse__country
     countries = []
+    for item in trainers:
+        countries.append(None)
     #for item in soup.find_all("span", class_="rp-horseTable__horse__country"):
     #    country = item.text.replace(" ", "")
     #    country = country.replace("\n", "")
@@ -235,6 +236,8 @@ def parsePage(racePageHtml, raceURL):
     #    posLengths.append(posLength)
 #
     posLengths = []
+    for item in trainers:
+        posLengths.append(None)
     #for item in soup.find_all("span", class_="rp-horseTable__pos__length"):
     #    posLength = item.text.replace(" ", "")
     #    posLength = posLength.replace("\n", "")
@@ -242,6 +245,8 @@ def parsePage(racePageHtml, raceURL):
 
 
     pedigrees = []
+    for item in trainers:
+        pedigrees.append([None, None, None])
     #for item in soup.find_all("tr", class_="rp-horseTable__pedigreeRow"):
     #    horsePed = []
     #    for thing in item.find_all("a", class_="ui-profileLink"):
@@ -337,12 +342,19 @@ def parsePage(racePageHtml, raceURL):
     positions = []
     startingPositions = []
 
-    for item in soup.find_all(class_="rp-horseTable__pos__number"):
-        item = cleanUp(item.text)
-        position = item[0]
-        startingPosition = item[3:].replace(")", "")
-        positions.append(position)
-        startingPositions.append(startingPosition)
+    for item in horses:
+        positions.append(None)
+        startingPositions.append(None)
+
+    
+    for item in raceInfo:
+        print(item)
+    
+    prices = []
+    for i in range(len(horses)):
+        price = input(horses[i] + ": ")
+        prices.append(str(price))
+
 
 
 
@@ -366,7 +378,7 @@ def parsePage(racePageHtml, raceURL):
                             RPRs[i],
                             MRs[i])
     currentRace.save()
-    currentRace.print()
+    #currentRace.print()
     
 
 

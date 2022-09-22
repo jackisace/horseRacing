@@ -1,4 +1,4 @@
-currentRaceId = 31842
+currentRaceId = 31875
 
 racesMaster = []
 horsesMaster = []
@@ -94,8 +94,14 @@ class race:
             self.fixTime()
         except:
             pass
+        try:
+            self.setRadeId()
+        except:
+            pass
         
 
+    def setRaceId(self):
+        self.raceId = int(self.raceURL.split("/")[-1])
     
     def fixDates(self):
         # 27 Mar 2022
@@ -228,7 +234,8 @@ class race:
         
 
     def save(self):
-        filename = "pickles/race{}.pickle".format(self.raceId)
+        self.setRaceId()
+        filename = "pickles/{}.pickle".format(str(self.raceId))
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
 
@@ -342,11 +349,11 @@ class horse:
                 self.firstWeight = int(self.firstWeight)    
             except:
                 self.firstWeight = None
-        if type(self.posLength) is not type(s):
-            try:
-                self.posLength = str(self.posLength)    
-            except:
-                self.posLength = None
+        #if type(self.posLength) is not type(s):
+        #    try:
+        #        self.posLength = str(self.posLength)    
+        #    except:
+        #        self.posLength = None
         #if type(self.pedigree[0]) is not type(s):
         #try:
             #    self.pedigree[0 = (#    selfstr.pedigree[0)    
@@ -488,7 +495,10 @@ class horse:
     def processing(self):
         #self.convertPrice()
         #self.convertWeights()
-        self.fixCountry()
+        try:
+            self.fixCountry()
+        except:
+            pass
 
         global currentRace
         currentRace.addHorse(self)
