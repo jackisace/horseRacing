@@ -18,7 +18,6 @@ lastURL = "https://www.racingpost.com/results/416/sha-tin/2021-03-07/779774"
 START = False
 
 lastDate = lastURL.split("/")[-2]
-print(lastDate)
 DATESTART = False
 
 
@@ -27,8 +26,9 @@ datetime_object = datetime.datetime.now()
 url = "https://www.racingpost.com/results/DATE"
 
 URLs = []
+numberOfDaysToMilk = 2
 
-for i in range(6200): # 6200
+for i in range(numberOfDaysToMilk): # 6200
     datetime_object = datetime_object - datetime.timedelta(days=1)
     date = (str(datetime_object).split(" ")[0])
     URLs.append(url.replace("DATE", date))
@@ -61,5 +61,3 @@ for URL in URLs: # FOR EACH DATE
                 parsePage(raceHtml, raceURL)
 
 
-
-        

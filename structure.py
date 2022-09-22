@@ -1,4 +1,5 @@
-currentRaceId = 31672
+currentRaceId = 31842
+
 racesMaster = []
 horsesMaster = []
 currentRace = None
@@ -77,9 +78,23 @@ class race:
         currentRace = self
 
     def fixData(self):
-        self.fixPositions()
-        self.fixStartingPositions()
-        self.fixDates()
+        try:
+            self.fixPositions()
+        except:
+            pass
+        try:
+            self.fixStartingPositions()
+        except:
+            pass
+        try:
+            self.fixDates()
+        except:
+            pass
+        try:
+            self.fixTime()
+        except:
+            pass
+        
 
     
     def fixDates(self):
@@ -108,10 +123,19 @@ class race:
         for H in self.horses:
             H.position = position
             position += 1
+    
+    def fixTime(self):
+        t = self.time.split(":")
+        t1 = int(t[0])*60
+        t2 = int(t[1])
+        self.time = int(t1+t2)
+
+
 
 
 
     def getData(self):
+        self.fixData()
         raceData = []
         
         for H in self.horses:
@@ -261,91 +285,203 @@ class horse:
         self.MR = MR
 
         self.processing()
+
+    
+    def cleanUp(self):
+        s = str("string")
+        f = float(0.5)
+        i = int(1)
+        b = bool(True)
+        if type(self.name) is not type(s):
+            try:
+                self.name = str(self.name)    
+            except:
+                self.name = None
+        if type(self.jockey) is not type(s):
+            try:
+                self.jockey = str(self.jockey)    
+            except:
+                self.jockey = None
+        if type(self.trainer) is not type(s):
+            try:
+                self.trainer = str(self.trainer)    
+            except:
+                self.trainer = None
+        if type(self.age) is not type(i):
+            try:
+                self.age = int(self.age)    
+            except:
+                self.age = None
+        if type(self.topspeed) is not type(i):
+            try:
+                self.topspeed = int(self.topspeed)    
+            except:
+                self.topspeed = None
+        if type(self.weight) is not type(s):
+            try:
+                self.weight = str(self.weight)    
+            except:
+                self.weight = None
+        if type(self.rating) is not type(i):
+            try:
+                self.rating = int(self.rating)    
+            except:
+                self.rating = None
+        if type(self.price) is not type(f):
+            try:
+                self.price = float(self.price)    
+            except:
+                self.price = None
+        if type(self.country) is not type(s):
+            try:
+                self.country = str(self.country)    
+            except:
+                self.country = None
+        if type(self.firstWeight) is not type(i):
+            try:
+                self.firstWeight = int(self.firstWeight)    
+            except:
+                self.firstWeight = None
+        if type(self.posLength) is not type(s):
+            try:
+                self.posLength = str(self.posLength)    
+            except:
+                self.posLength = None
+        #if type(self.pedigree[0]) is not type(s):
+        #try:
+            #    self.pedigree[0 = (#    selfstr.pedigree[0)    
+        #except:
+            #    self.pedigree[0] = None
+        #if type(self.pedigree[1]) is not type(s):
+        #try:
+            #    self.pedigree[1 = (#    selfstr.pedigree[1)    
+        #except:
+            #    self.pedigree[1] = None
+        #if type(self.pedigree[2]) is not type(s):
+        #try:
+            #    self.pedigree[2 = (#    selfstr.pedigree[2)    
+        #except:
+            #    self.pedigree[2] = None
+        if type(self.favourite) is not type(b):
+            try:
+                self.favourite = bool(self.favourite)    
+            except:
+                self.favourite = None
+        if type(self.position) is not type(i):
+            try:
+                self.position = int(self.position)    
+            except:
+                self.position = None
+        if type(self.startingPosition) is not type(i):
+            try:
+                self.startingPosition = int(self.startingPosition)    
+            except:
+                self.startingPosition = None
+        if type(self.secondWeight) is not type(i):
+            try:
+                self.secondWeight = int(self.secondWeight)    
+            except:
+                self.secondWeight = None
+        if type(self.RPR) is not type(i):
+            try:
+                self.RPR = int(self.RPR)    
+            except:
+                self.RPR = None
+        if type(self.MR) is not type(i):
+            try:
+                self.MR = int(self.MR)    
+            except:
+                self.MR = None
+
+
+
         
 
     def getData(self):
+        self.cleanUp()
         data = []
 
         try: 
             data.append(self.name)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.jockey)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.trainer)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.age)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.topspeed)
         except:
-            data.append("")
-        try: 
-            data.append(self.weight)
-        except:
-            data.append("")
+            data.append(None)
+        #try: 
+        #    data.append(self.weight)
+        #except:
+        #    data.append(None)
         try: 
             data.append(self.rating)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.price)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.country)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.firstWeight)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.posLength)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.pedigree[0])
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.pedigree[1])
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.pedigree[2])
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.favourite)
         except:
-            data.append("")
-        try: 
-            data.append(self.position)
-        except:
-            data.append("")
+            data.append(None)
+        
         try: 
             data.append(self.startingPosition)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.secondWeight)
         except:
-            data.append("")
+            data.append(None)
         try: 
             data.append(self.RPR)
         except:
-            data.append("")
+            data.append(None)
         #try: 
         #    data.append(self.MR)
         #except:
         #    data.append("")
+        try: 
+            data.append(self.position)
+        except:
+            data.append(None)
         
         return data
 
@@ -395,7 +531,6 @@ class horse:
                                                                                     str(self.price), 
                                                                                     self.country, 
                                                                                     self.posLength))
-
 
 
 
