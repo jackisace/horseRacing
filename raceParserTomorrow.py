@@ -10,12 +10,14 @@ import time
 
 
 
+
 def cleanUp(st):
     st = st.replace("\n", "")
     while st[0] == " ":
         st = st[1:]
     while st[-1] == " ":
         st = st[:-1]
+    return st
 
 
 
@@ -140,7 +142,7 @@ def parsePage(racePageHtml, raceURL):
 
     item = soup.find(class_="RC-courseHeader__time")
     try:
-        raceInfo.append(item.text)
+        raceInfo.append(cleanUp(item.text))
     except:
         raceInfo.append(None)
 
@@ -223,16 +225,11 @@ def parsePage(racePageHtml, raceURL):
         startingPositions.append(None)
 
     
-    for item in raceInfo:
-        print(item)
-    
     prices = []
-    for item in soup.find_all('div', {'data-test-selector':"RC-historyPrices-item-1"}):
-        try:
-            prices.append(cleanUp(item.text))
-        except:
-            price = input(horses[i] + ": ")
-            prices.append(str(price))
+    for i in range(len(horses)):
+
+        price = input(horses[i] + ": ")
+        prices.append(str(price))
 
 
 

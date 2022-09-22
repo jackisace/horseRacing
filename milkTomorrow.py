@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from structure import *
 from raceParserTomorrow import *
+import os
 
 URL = "https://www.racingpost.com/racecards/tomorrow"
 
