@@ -95,7 +95,7 @@ class race:
         except:
             pass
         try:
-            self.setRadeId()
+            self.setRaceId()
         except:
             pass
         
@@ -155,73 +155,77 @@ class race:
                 pass
             horseData = []
             try:
+                horseData.append(self.raceURL)
+            except:
+                horseData.append(None)
+            try:
                 horseData.append(self.day)
             except:
-                horseData.append("-")
+                horseData.append(None)
             try:
                 horseData.append(self.month)
             except:
-                horseData.append("-")
+                horseData.append(None)
             try:
                 horseData.append(self.year)
             except:
-                horseData.append("-")
+                horseData.append(None)
             try:
                 horseData.append(self.time)
             except:
-                horseData.append("-")
+                horseData.append(None)
             try:
                 horseData.append(self.name)
             except:
-                horseData.append("-")
+                horseData.append(None)
             #try:
             #    horseData.append(self.title)
             #except:
-            #    horseData.append("-")
+            #    horseData.append(None)
             try:
                 horseData.append(self.classif)
             except:
-                horseData.append("-")
+                horseData.append(None)
             try:
                 horseData.append(self.rating)
             except:
-                horseData.append("-")
+                horseData.append(None)
             try:
                 horseData.append(self.distance)
             except:
-                horseData.append("-")
+                horseData.append(None)
             #try:
             #    horseData.append(self.distanceDetail)
             #except:
-            #    horseData.append("-")
+            #    horseData.append(None)
             try:
                 horseData.append(self.condition)
             except:
-                horseData.append("-")
+                horseData.append(None)
             #try:
             #    horseData.append(self.prize1)
             #except:
-            #    horseData.append("-")
+            #    horseData.append(None)
             #try:
             #    horseData.append(self.prize2)
             #except:
-            #    horseData.append("-")
+            #    horseData.append(None)
             #try:
             #    horseData.append(self.prize3)
             #except:
-            #    horseData.append("-")
+            #    horseData.append(None)
             #try:
             #    horseData.append(self.prize4)
             #except:
-            #    horseData.append("-")
+            #    horseData.append(None)
             #try:
             #    horseData.append(self.prize5)
             #except:
-            #    horseData.append("-")
+            #    horseData.append(None)
             #try:
             #    horseData.append(self.prize6)
             #except:
-            #    horseData.append("-")
+            #    horseData.append(None)
             data = H.getData()
             for field in data:
                 horseData.append(field)
@@ -299,6 +303,7 @@ class horse:
         f = float(0.5)
         i = int(1)
         b = bool(True)
+        
         if type(self.name) is not type(s):
             try:
                 self.name = str(self.name)    
@@ -485,7 +490,7 @@ class horse:
         #    data.append(self.MR)
         #except:
         #    data.append("")
-        try: 
+        try:
             data.append(self.position)
         except:
             data.append(None)
@@ -513,12 +518,12 @@ class horse:
             self.country = "ENG"
 
     def convertWeights(self):
-        weight = str(self.firstWeight) + "-"
+        weight = str(self.firstWeight) + None
         weight += str(self.weight[len(self.firstWeight):])
 
         self.weight = weight
-        self.firstWeight = int(weight.split("-")[0])
-        self.secondWeight = int(weight.split("-")[1])
+        self.firstWeight = int(weight.split(None)[0])
+        self.secondWeight = int(weight.split(None)[1])
 
         
 
