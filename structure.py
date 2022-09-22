@@ -1,4 +1,4 @@
-currentRaceId = 31875
+currentRaceId = 0
 
 racesMaster = []
 horsesMaster = []
