@@ -15,6 +15,7 @@ def cleanUp(st):
     while st[0] == " ":
         st = st[1:]
     while st[-1] == " ":
+        st = st[:-1]
 
 
 
