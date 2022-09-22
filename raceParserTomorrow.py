@@ -12,6 +12,7 @@ import time
 
 
 def cleanUp(st):
+    st = st.replace("T:\xa0", "")
     st = st.replace("\n", "")
     while st[0] == " ":
         st = st[1:]
@@ -107,7 +108,7 @@ def parsePage(racePageHtml, raceURL):
 
     '''Trainers names'''
     trainers = []
-    for item in soup.find_all('div', "RC-runnerInfo_trainer"):
+    for item in soup.find_all('a', {'data-test-selector':"RC-cardPage-runnerTrainer-name"}):
         trainers.append(cleanUp(item.text))
 
     countries = []
@@ -196,7 +197,6 @@ def parsePage(racePageHtml, raceURL):
             r = reward[:-3]
             r = r.replace(",", "")
             rewards.append(r)
-        
             raceInfo.append(rewards[1:])
     except:
         raceInfo.append([None, None, None])

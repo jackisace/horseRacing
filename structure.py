@@ -202,10 +202,10 @@ class race:
             #    horseData.append(self.distanceDetail)
             #except:
             #    horseData.append(None)
-            try:
-                horseData.append(self.condition)
-            except:
-                horseData.append(None)
+            #try:
+            #    horseData.append(self.condition)
+            #except:
+            #    horseData.append(None)
             #try:
             #    horseData.append(self.prize1)
             #except:
@@ -441,47 +441,47 @@ class horse:
         #    data.append(self.weight)
         #except:
         #    data.append(None)
-        try: 
-            data.append(self.rating)
-        except:
-            data.append(None)
+        #try: 
+        #    data.append(self.rating)
+        #except:
+        #    data.append(None)
         try: 
             data.append(self.price)
         except:
             data.append(None)
-        try: 
-            data.append(self.country)
-        except:
-            data.append(None)
+        #try: 
+        #    data.append(self.country)
+        #except:
+        #    data.append(None)
         try: 
             data.append(self.firstWeight)
         except:
             data.append(None)
-        try: 
-            data.append(self.posLength)
-        except:
-            data.append(None)
-        try: 
-            data.append(self.pedigree[0])
-        except:
-            data.append(None)
-        try: 
-            data.append(self.pedigree[1])
-        except:
-            data.append(None)
-        try: 
-            data.append(self.pedigree[2])
-        except:
-            data.append(None)
-        try: 
-            data.append(self.favourite)
-        except:
-            data.append(None)
+        #try: 
+        #    data.append(self.posLength)
+        #except:
+        #    data.append(None)
+        #try: 
+        #    data.append(self.pedigree[0])
+        #except:
+        #    data.append(None)
+        #try: 
+        #    data.append(self.pedigree[1])
+        #except:
+        #    data.append(None)
+        #try: 
+        #    data.append(self.pedigree[2])
+        #except:
+        #    data.append(None)
+        #try: 
+        #    data.append(self.favourite)
+        #except:
+        #    data.append(None)
         
-        try: 
-            data.append(self.startingPosition)
-        except:
-            data.append(None)
+        #try: 
+        #    data.append(self.startingPosition)
+        #except:
+        #    data.append(None)
         try: 
             data.append(self.secondWeight)
         except:
