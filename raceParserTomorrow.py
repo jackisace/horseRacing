@@ -51,7 +51,7 @@ def parsePage(racePageHtml, raceURL):
     '''Jockey names'''
 
     output = ''
-    for item in soup.find_all('a',class_=['RC-runnerInfo__name',""]):
+    for item in soup.find_all('a',class_=['RC-runnerInfo_jockey',""]):
         jockeys.append(cleanUp(item.text))
 
 
