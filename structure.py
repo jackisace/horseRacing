@@ -159,6 +159,10 @@ class race:
             except:
                 horseData.append(None)
             try:
+                horseData.append(self.date)
+            except:
+                horseData.append(None)
+            try:
                 horseData.append(self.day)
             except:
                 horseData.append(None)
