@@ -15,30 +15,6 @@ def cleanUp(st):
     while st[0] == " ":
         st = st[1:]
     while st[-1] == " ":
-        st = st[:-1]
-    return st
-
-'''urls to test'''
-
-#url = "https://www.racingpost.com/results/36/newbury/2022-09-16/819636"
-#url = "https://www.racingpost.com/results/36/newbury/2022-09-16/819634"
-#url = 'https://www.racingpost.com/results/36/newbury/2022-09-16/819632'
-
-headers = {
-    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "accept-language": "en-GB,en;q=0.9,en-US;q=0.8",
-    "sec-ch-ua": "\"Microsoft Edge\";v=\"105\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"105\"",
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": "\"Windows\"",
-    "sec-fetch-dest": "document",
-    "sec-fetch-mode": "navigate",
-    "sec-fetch-site": "same-origin",
-    "sec-fetch-user": "?1",
-    "upgrade-insecure-requests": "1"
-  }
-
-
-
 
 
 
@@ -65,20 +41,7 @@ def parsePage(racePageHtml, raceURL):
     '''Horse names'''
     for thing in soup.find_all('a',class_="RC-runnerName"):
         horses.append(cleanUp(thing.text))
-        #output += ("{}, {}".format(' '.join(thing['class']),thing.text))
 
-
-    #output = "".join(line.strip() for line in output.split("rp-horseTable__horse__name ui-link ui-link_table js-popupLink"))
-    #output = output.replace('\n', '')
-    #horses = output.split(',')
-    #temp = []
-    #for item in horses:
-    #    if len(item) == 0:
-    #        pass
-    #    else:
-    #        temp.append(item[25:])
-
-    #horses = temp
     
 
 
@@ -87,26 +50,7 @@ def parsePage(racePageHtml, raceURL):
     output = ''
     for item in soup.find_all('a',class_=['RC-runnerInfo__name',""]):
         jockeys.append(cleanUp(item.text))
-        #output += ("{}, {}".format(' '.join(item['class']),item.text))
 
-
-    #output = "".join(line.strip() for line in output.split("rp-horseTable__human__link ui-link ui-link_table ui-link_marked ui-profileLink js-popupLink"))
-    #output = output.replace('\n', '')
-    #output = output.replace('  ', '')
-    #jockeys = output.split(',')
-    #tmp = []
-    #jockeys = jockeys[1:]
-    #for jockey in jockeys:
-    #    try:
-    #        if jockey[0] == " ":
-    #            jockey = jockey[1:]
-    #    except:
-    #        pass
-#
-    #    tmp.append(jockey)
-#
-#
-    #jockeys = tmp
 
 
 
@@ -115,20 +59,7 @@ def parsePage(racePageHtml, raceURL):
     output = ''
     for item in soup.find_all('span',class_=['RC-runnerAge',""]):
         ages.append(cleanUp(item.text))
-        #output += ("{}, {}".format(' '.join(item['class']),item.text))
 
-
-    #output = "".join(line.strip() for line in output.split("rp-horseTable__spanNarrow rp-horseTable__spanNarrow_age"))
-    #output = output.replace('\n', '')
-    #ages = output.split(',')
-    #temp = []
-    #for item in ages:
-    #    if len(item) == 0:
-    #        pass
-    #    else:
-    #        temp.append(item[9:])
-#
-    #ages = temp
 
 
     '''Topsspeed of horse'''
@@ -139,28 +70,14 @@ def parsePage(racePageHtml, raceURL):
         topspeed.append(cleanUp(item.text))
     for i in range(len(topspeed)):
         if topspeed[i] == "":
-            topspeed[i] = "-"
+            topspeed[i] = None
 
 
     '''Weight -- Still needs to be split by a slash e.g. 810 should be 8/10'''
 
-    output = ''
     for item in soup.find_all('span',class_=['RC-runnerWgt__carried']):
         weights.append(cleanUp(item.text))
-        #output += ("{}, {}".format(' '.join(item['class']),item.text))
 
-
-    #output = "".join(line.strip() for line in output.split("rp-horseTable__spanNarrow rp-horseTable__wgt"))
-    #output = output.replace('\n', '')
-    #weights = output.split(',')
-    #temp = []
-    #for item in weights:
-    #    if len(item) == 0:
-    #        pass
-    #    else:
-    #        temp.append(item[13:])
-#
-    #weights = temp
 
     '''Offical record'''
 
@@ -182,7 +99,7 @@ def parsePage(racePageHtml, raceURL):
 
     if len(ors) == 0:
         for i in range(len(horses)):
-            ors.append("-")
+            ors.append(None)
 
 
     '''Trainers names'''
@@ -190,126 +107,84 @@ def parsePage(racePageHtml, raceURL):
     for item in soup.find_all('div', "RC-runnerInfo_trainer"):
         trainers.append(cleanUp(item.text))
 
-    #tmp = trainers
-    #trainers = []
-    #even = True
-    #for trainer in tmp:
-    #    if even:
-    #        trainers.append(trainer)
-    #        even = False
-    #    else:
-    #        even = True
-    #trainers
-
-
-    # class="rp-horseTable__horse__price"
-    #print(soup)  data-diffusion-fractional
-    #prices = []
-    #item = soup.find('div', {'data-test-selector':"text-prizeMoney"})
-    #for item in soup.find_all("a", class_="RC-runnerPrice"):
-    #    a = str(item)
-    #    if 'data-diffusion-fractional' in a:
-    #        
-    #        a = a.split('data-diffusion-fractional')[1]
-    #        a = a.split('"')[0]
-    #        prices.append(a)
-
-        
-    # rp-horseTable__horse__country
     countries = []
     for item in trainers:
         countries.append(None)
-    #for item in soup.find_all("span", class_="rp-horseTable__horse__country"):
-    #    country = item.text.replace(" ", "")
-    #    country = country.replace("\n", "")
-    #    countries.append(country)
+
 
 
     firstWeights = []
     for item in soup.find_all("span", class_="RC-runnerWgt__carried_st"):
         firstWeights.append(cleanUp(item.text))
 
-    #posLengths = []
-    #for item in soup.find_all("span", class_="rp-horseTable__pos__length"):
-    #    posLength = item.text.replace(" ", "")
-    #    posLength = posLength.replace("\n", "")
-    #    posLengths.append(posLength)
 #
     posLengths = []
     for item in trainers:
         posLengths.append(None)
-    #for item in soup.find_all("span", class_="rp-horseTable__pos__length"):
-    #    posLength = item.text.replace(" ", "")
-    #    posLength = posLength.replace("\n", "")
-    #    posLengths.append(posLength)
+
 
 
     pedigrees = []
     for item in trainers:
         pedigrees.append([None, None, None])
-    #for item in soup.find_all("tr", class_="rp-horseTable__pedigreeRow"):
-    #    horsePed = []
-    #    for thing in item.find_all("a", class_="ui-profileLink"):
-    #        horsePed.append(cleanUp(thing.text))
-    #    pedigrees.append(horsePed)
+
 
 
     raceInfo = []
-    item = soup.find(class_="rp-raceTimeCourseName__date")
+    item = soup.find(class_="RC-courseHeader__date")
     try:
         raceInfo.append(cleanUp(item.text))
     except:
-        raceInfo.append("-")
+        raceInfo.append(None)
 
-    item = soup.find(class_="rp-raceTimeCourseName__time")
+    item = soup.find(class_="RC-courseHeader__time")
     try:
         raceInfo.append(item.text)
     except:
-        raceInfo.append("-")
+        raceInfo.append(None)
 
-    item = soup.find(class_="rp-raceTimeCourseName__name")
+    item = soup.find(class_="RC-courseHeader__nameLink")
     try:
         raceInfo.append(cleanUp(item.text))
     except:
-        raceInfo.append("-")
+        raceInfo.append(None)
 
-    item = soup.find(class_="rp-raceTimeCourseName__title")
+    item = soup.find('span', {'data-test-selector':"RC-header__raceInstanceTitle"})
     try:
         raceInfo.append(cleanUp(item.text))
     except:
-        raceInfo.append("-")
+        raceInfo.append(None)
 
-    item = soup.find(class_="rp-raceTimeCourseName_class")
+    item = soup.find('span', {'data-test-selector':"RC-header__raceClass"})
     try:
         raceInfo.append(cleanUp(item.text))
     except:
-        raceInfo.append("-")
+        raceInfo.append(None)
 
-    item = soup.find(class_="rp-raceTimeCourseName_ratingBandAndAgesAllowed")
+    item = soup.find('span', {'data-test-selector':"RC-header__rpAges"})
     try:
         raceInfo.append(cleanUp(item.text))
     except:
-        raceInfo.append("-")
+        raceInfo.append(None)
 
-    item = soup.find(class_="rp-raceTimeCourseName_distance")
+    item = soup.find(class_="RC-cardHeader__distance")
     try:
         raceInfo.append(cleanUp(item.text))
     except:
-        raceInfo.append("-")
+        raceInfo.append(None)
 
-    #not in all pages
-    item = soup.find(class_="rp-raceTimeCourseName_distanceDetail")
+    item = soup.find(class_="rp-raceTimeCourseName_distanceDetail") # CANT GET FOR FUTURE RACES
     try:
         raceInfo.append(cleanUp(item.text))
     except:
-        raceInfo.append("-")
+        raceInfo.append(None)
 
 
-    item = soup.find(class_="rp-raceTimeCourseName_condition")
+    item = soup.find(class_="rp-raceTimeCourseName_condition") # CANT GET FOR FUTURE RACES
     try:
         raceInfo.append(cleanUp(item.text))
     except:
-        raceInfo.append("-")
+        raceInfo.append(None)
 
     rewards = []
     try:
@@ -321,7 +196,7 @@ def parsePage(racePageHtml, raceURL):
         
             raceInfo.append(rewards[1:])
     except:
-        raceInfo.append(["-", "-", "-"])
+        raceInfo.append([None, None, None])
 
     RPRs = []
     for item in soup.find_all('span', 'RC-runnerRpr'):
@@ -329,7 +204,7 @@ def parsePage(racePageHtml, raceURL):
 
     if len(RPRs) == 0:
         for i in range(len(horses)):
-            RPRs.append("-")
+            RPRs.append(None)
 
     MRs = []
     for item in soup.find_all('td', {'data-ending':"MR"}):
@@ -337,7 +212,7 @@ def parsePage(racePageHtml, raceURL):
 
     if len(MRs) == 0:
         for i in range(len(horses)):
-            MRs.append("-")
+            MRs.append(None)
 
     positions = []
     startingPositions = []
@@ -351,9 +226,12 @@ def parsePage(racePageHtml, raceURL):
         print(item)
     
     prices = []
-    for i in range(len(horses)):
-        price = input(horses[i] + ": ")
-        prices.append(str(price))
+    for item in soup.find_all('div', {'data-test-selector':"RC-historyPrices-item-1"}):
+        try:
+            prices.append(cleanUp(item.text))
+        except:
+            price = input(horses[i] + ": ")
+            prices.append(str(price))
 
 
 
