@@ -25,6 +25,7 @@ def cleanUp(st):
 def parsePage(racePageHtml, raceURL):
 
     soupthisracePage = racePageHtml.text
+    open("a.html", "w").write(soupthisracePage)
 
     if "Sorry, " in soupthisracePage:
         return
@@ -43,8 +44,8 @@ def parsePage(racePageHtml, raceURL):
 
 
     '''Horse names'''
-    for thing in soup.find_all('a',class_="RC-runnerName"):
-        horses.append(cleanUp(thing.text))
+    for item in soup.find_all('a',class_="RC-runnerName"):
+        horses.append(cleanUp(item.text))
 
     
 
@@ -52,7 +53,7 @@ def parsePage(racePageHtml, raceURL):
     '''Jockey names'''
 
     output = ''
-    for item in soup.find_all('a',class_=['RC-runnerInfo_jockey',""]):
+    for item in soup.find_all('a', {'data-test-selector':"RC-cardPage-runnerJockey-name"}):
         jockeys.append(cleanUp(item.text))
 
 
@@ -61,7 +62,7 @@ def parsePage(racePageHtml, raceURL):
     '''Horse Age'''
 
     output = ''
-    for item in soup.find_all('span',class_=['RC-runnerAge',""]):
+    for item in soup.find_all('span',class_='RC-runnerAge'):
         ages.append(cleanUp(item.text))
 
 
@@ -226,6 +227,8 @@ def parsePage(racePageHtml, raceURL):
 
     
     prices = []
+    for item in soup.find_all("a", "RC-runnerPrice"):
+        print(item)
     for i in range(len(horses)):
 
         price = input(horses[i] + ": ")
@@ -253,6 +256,7 @@ def parsePage(racePageHtml, raceURL):
                             startingPositions[i],
                             RPRs[i],
                             MRs[i])
+    currentRace.switchPosition()
     currentRace.save()
     #currentRace.print()
     

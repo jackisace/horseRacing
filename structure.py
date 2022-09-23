@@ -158,30 +158,30 @@ class race:
                 horseData.append(self.raceURL)
             except:
                 horseData.append(None)
-            try:
-                horseData.append(self.date)
-            except:
-                horseData.append(None)
-            try:
-                horseData.append(self.day)
-            except:
-                horseData.append(None)
-            try:
-                horseData.append(self.month)
-            except:
-                horseData.append(None)
-            try:
-                horseData.append(self.year)
-            except:
-                horseData.append(None)
+            #try:
+            #    horseData.append(self.date)
+            #except:
+            #    horseData.append(None)
+            #try:
+            #    horseData.append(self.day)
+            #except:
+            #    horseData.append(None)
+            #try:
+            #    horseData.append(self.month)
+            #except:
+            #    horseData.append(None)
+            #try:
+            #    horseData.append(self.year)
+            #except:
+            #    horseData.append(None)
             try:
                 horseData.append(self.time)
             except:
                 horseData.append(None)
-            try:
-                horseData.append(self.name)
-            except:
-                horseData.append(None)
+            #try:
+            #    horseData.append(self.name)
+            #except:
+            #    horseData.append(None)
             #try:
             #    horseData.append(self.title)
             #except:
@@ -238,7 +238,9 @@ class race:
         return raceData
 
 
-
+    def switchPosition(self):
+        for H in self.horses:
+            H.switchPosition()
         
 
     def save(self):
@@ -411,7 +413,8 @@ class horse:
 
 
 
-        
+    def switchPosition(self):
+        self.startingPosition = self.position
 
     def getData(self):
         self.cleanUp()
@@ -478,10 +481,10 @@ class horse:
         #except:
         #    data.append(None)
         
-        #try: 
-        #    data.append(self.startingPosition)
-        #except:
-        #    data.append(None)
+        try: 
+            data.append(self.startingPosition)
+        except:
+            data.append(None)
         try: 
             data.append(self.secondWeight)
         except:
