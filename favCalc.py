@@ -34,7 +34,7 @@ def loadAll():
     print("Loading All Data")
     global races
     races = []
-    with open("allRaces.pickle", "rb") as f:
+    with open("allRacesNEW.pickle", "rb") as f:
         races = pickle.load(f)
     print("All Data Loaded")
 
@@ -47,6 +47,9 @@ wins = 0
 losses = 0
 streak = 0
 highestStreak = 0
+target = 1
+moneyLost = 0
+mostMoneyLost = 0
 streaks = []
 for r in races:
 
@@ -68,34 +71,38 @@ for r in races:
         
         prices.sort()
 
-        #for i in range(len(r.horses)):
-        #    if i > 4:
-        #        for h in r.horses:
-        #            if h not in bettingHorses:
-        #                if prices[i] == h.price:
-        #                    bettingHorses.append(h)
+        for h in r.horses:
+            if h.price == prices[0]:
+                if h.position == 1:
+                    wins += 1
+                    money = target
+                    target += 1
+                    if moneyLost > mostMoneyLost:
+                        mostMoneyLost = moneyLost
+                    moneyLost = 0
 
-        for fHorse in bettingHorses:
-            if fHorse.position == 1:
-                print(r.raceURL, fHorse.name, fHorse.price, fHorse.position)
-                money += fHorse.price
-                wins += 1
-                if streak > highestStreak:
-                    highestStreak = streak
-                streaks.append(streak)
-                streak = 0
-            else:
-                money -= 1
-                losses += 1
-                streak += 1
-            print(wins, losses, money)
+                else:
+                    losses += 1
+                    diff = target - money
+                    diffCost = diff / h.price
+                    moneyLost += diffCost
+                    money -= diffCost
+
+             
+
+
+
+        
     except:
         pass
 p = 0
 for i in streaks:
     p += i
 
+
+print(mostMoneyLost)    
+
 print(wins, losses, money)
-print("mean streak: " + str(p/len(streaks)))
+#print("mean streak: " + str(p/len(streaks)))
 
 print(highestStreak)

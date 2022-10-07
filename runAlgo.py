@@ -69,6 +69,22 @@ def checkPredictions():
     wins = 0
     consecutiveLosses = 0
     highestConsecutiveLosses = 0
+    money = 0
+    wins = 0
+    losses = 0
+    streak = 0
+    highestStreak = 0
+    money = 0
+    wins = 0
+    losses = 0
+    streak = 0
+    highestStreak = 0
+    target = 1
+    moneyLost = 0
+    mostMoneyLost = 0
+    streaks = []
+    
+    streaks = []
     for r in tomorrowsRaces:
         highest = None
         highestPrediction = 0.0
@@ -78,18 +94,23 @@ def checkPredictions():
                 highestPrediction = h.prediction
         
         if highest.position == 1:
-            money += highest.price
             wins += 1
-            
-            if consecutiveLosses > highestConsecutiveLosses:
-                highestConsecutiveLosses = consecutiveLosses
-            consecutiveLosses = 0
+            money = target
+            target += 1
+            if moneyLost > mostMoneyLost:
+                mostMoneyLost = moneyLost
+            moneyLost = 0
         else:
-            money -= 1
-            consecutiveLosses += 1
+            losses += 1
+            diff = target - money
+            diffCost = diff / highest.price
+            moneyLost += diffCost
+            money -= diffCost
+
             
         print(wins, consecutiveLosses, money)
     print("highest consecutive losses:", highestConsecutiveLosses)
+    print("most money lost:", mostMoneyLost)
 
 
 
