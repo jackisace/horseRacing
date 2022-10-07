@@ -5,6 +5,8 @@ horsesMaster = []
 currentRace = None
 
 import pickle
+import requests
+from bs4 import BeautifulSoup
 
 def saveAll():
     with open('races.pickle', 'wb') as f:
@@ -33,7 +35,6 @@ class race:
         self.day = None
         self.month = None
         self.year = None
-
         self.date = raceInfo[0]
         self.time = raceInfo[1]
         self.name = raceInfo[2]
@@ -78,10 +79,10 @@ class race:
         currentRace = self
 
     def fixData(self):
-        try:
-            self.fixPositions()
-        except:
-            pass
+        #try:
+        #    self.fixPositions()
+        #except:
+        #    pass
         try:
             self.fixStartingPositions()
         except:
@@ -98,6 +99,177 @@ class race:
             self.setRaceId()
         except:
             pass
+
+    def getAll(self):
+        #self.fixData()
+        raceData = []
+        for H in self.horses:
+            horseData = []
+            try:
+                horseData.append(self.horses)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.raceURL)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.raceId)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.day)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.month)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.year)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.date)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.time)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.name)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.title)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.classif)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.rating)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.distance)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.distanceDetail)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.condition)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.prize1)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.prize2)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.prize3)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.prize4)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.prize5)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(self.prize6)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.name)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.jockey)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.trainer)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.age)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.topspeed)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.weight)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.rating)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.price)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.country)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.firstWeight)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.posLength)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.pedigree)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.favourite)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.position)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.startingPosition)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.secondWeight)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.RPR)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.MR)
+            except:
+                horseData.append(None)
+            try:
+                horseData.append(H.form)
+            except:
+                horseData.append(None)
+            try:
+                raceData.append(horseData)
+            except:
+                pass
+        return raceData
         
 
     def setRaceId(self):
@@ -125,10 +297,47 @@ class race:
 
     
     def fixPositions(self):
-        position = 1
-        for H in self.horses:
-            H.position = position
-            position += 1
+        try:
+            original = self.raceURL
+            #print(original)
+            url = "https://www.sportinglife.com/racing/results/DATE/PLACE/RACEID/NAME"
+
+            place = original.split("/")[6]
+            raceId = original.split("/")[8]
+            name = original.split("/")[-1]
+
+            newURL = url.replace("DATE", races[0].date)
+            newURL = newURL.replace("PLACE", place)
+            newURL = newURL.replace("RACEID", raceId)
+            newURL = newURL.replace("NAME", name)
+            print(newURL)
+            if newURL == "https://www.sportinglife.com/racing/results/2021-10-02/Naas/647177/Irish-Stallion-Farms-EBF-C-&-G-Maiden":
+                print("found")
+
+            response = requests.get(newURL)
+            soupthis = response.text
+            soup = BeautifulSoup(soupthis, 'html.parser')
+
+            runners = soup.find_all("div", class_="ResultRunner__StyledResultRunnerWrapper-sc-58kifh-13")
+
+
+            for runner in runners:
+                horseName = str(runner.find("div", class_="ResultRunner__StyledHorseName-sc-58kifh-5").text)
+                try:
+                    position = int(runner.find("div", {"data-test-id":"position-no"}).text[:-2])
+                except:
+                    position = None
+                for h in r.horses:
+                    try:
+                        if horseName in str(h.name):
+                            h.position = position
+                            break
+                            #print("match " + h.name)
+                    except:
+                        pass
+            r.saveSL()
+        except:
+            print("FAIL " + r.raceURL)
     
     def fixTime(self):
         t = self.time.split(":")
@@ -136,7 +345,12 @@ class race:
         t2 = int(t[1])
         self.time = int(t1+t2)
 
-
+    def prep(self, var, data):
+        try: 
+            data.append(var)
+        except:
+            data.append(None)
+        return data
 
 
 
@@ -158,36 +372,8 @@ class race:
                 horseData.append(self.raceURL)
             except:
                 horseData.append(None)
-            #try:
-            #    horseData.append(self.date)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.day)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.month)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.year)
-            #except:
-            #    horseData.append(None)
             try:
                 horseData.append(self.time)
-            except:
-                horseData.append(None)
-            #try:
-            #    horseData.append(self.name)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.title)
-            #except:
-            #    horseData.append(None)
-            try:
-                horseData.append(self.classif)
             except:
                 horseData.append(None)
             try:
@@ -198,38 +384,6 @@ class race:
                 horseData.append(self.distance)
             except:
                 horseData.append(None)
-            #try:
-            #    horseData.append(self.distanceDetail)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.condition)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.prize1)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.prize2)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.prize3)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.prize4)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.prize5)
-            #except:
-            #    horseData.append(None)
-            #try:
-            #    horseData.append(self.prize6)
-            #except:
-            #    horseData.append(None)
             data = H.getData()
             for field in data:
                 horseData.append(field)
@@ -242,6 +396,13 @@ class race:
         for H in self.horses:
             H.switchPosition()
         
+    def saveSL(self):
+        #https://www.sportinglife.com/racing/racecards/2022-09-24/Newmarket/racecard/698585/Juddmonte-Royal-Lodge-Stakes-Group-2
+        #self.raceId = str(self.raceURL.split("/")[-2])
+        filename = "pickles/SL{}.pickle".format(str(self.raceId))
+        with open(filename, 'wb') as f:
+            pickle.dump(self, f)
+
 
     def save(self):
         self.setRaceId()
@@ -261,18 +422,16 @@ class race:
 
     def print(self):
         print(self.raceURL)
-        print(self.date, self.time, self.name, self.title, self.classif, self.rating, self.distance, self.condition)
+        print(self.date, self.time, self.name, self.title, self.classif, self.rating, self.distance)
 
-        print("{:25s}{:25s}{:25s}{:10s}{:10s}{:10s}{:10s}{:10s}{:10s}{:10s}".format("Horse", 
-                                                                                    "Jockey", 
-                                                                                    "Trainer", 
-                                                                                    "Age", 
-                                                                                    "TS", 
-                                                                                    "Weight", 
-                                                                                    "Rating", 
-                                                                                    "Price", 
-                                                                                    "Country", 
-                                                                                    "PosL"))
+        print("{:25s}{:25s}{:25s}{:10s}{:10s}{:10s}{:10s}".format("Horse", 
+                                                                    "Jockey", 
+                                                                    "Trainer", 
+                                                                    "Age", 
+                                                                    "Weight", 
+                                                                    "Rating", 
+                                                                    "Price"))
+                                                                                    
         for horse in self.horses:
             horse.print()
 
@@ -281,7 +440,7 @@ class race:
 class horse:
     def __init__(self, name, jockey, trainer, age, topspeed, weight, 
                 rating, price, country, firstWeight, posLength, pedigree, 
-                position, startingPosition, RPR, MR):
+                position, startingPosition, RPR, MR, form):
         self.name = name
         self.jockey = jockey
         self.trainer = trainer
@@ -300,11 +459,30 @@ class horse:
         self.secondWeight = 0
         self.RPR = RPR
         self.MR = MR
+        self.form = form
+        self.prediction = None
 
         self.processing()
 
+    def sortForm(self):
+        form = []
+        for ch in self.form:
+            if ch.isnumeric():
+                form.append(int(ch))
+            else:
+                form.append(None)
+        form.reverse()
+        while len(form) < 5:
+            form.append(None)
+        self.form = form[:5]
     
     def cleanUp(self):
+        try:
+            self.sortForm()
+        except:
+            pass
+        self.convertWeights()
+
         s = str("string")
         f = float(0.5)
         i = int(1)
@@ -360,26 +538,6 @@ class horse:
                 self.firstWeight = int(self.firstWeight)    
             except:
                 self.firstWeight = None
-        #if type(self.posLength) is not type(s):
-        #    try:
-        #        self.posLength = str(self.posLength)    
-        #    except:
-        #        self.posLength = None
-        #if type(self.pedigree[0]) is not type(s):
-        #try:
-            #    self.pedigree[0 = (#    selfstr.pedigree[0)    
-        #except:
-            #    self.pedigree[0] = None
-        #if type(self.pedigree[1]) is not type(s):
-        #try:
-            #    self.pedigree[1 = (#    selfstr.pedigree[1)    
-        #except:
-            #    self.pedigree[1] = None
-        #if type(self.pedigree[2]) is not type(s):
-        #try:
-            #    self.pedigree[2 = (#    selfstr.pedigree[2)    
-        #except:
-            #    self.pedigree[2] = None
         if type(self.favourite) is not type(b):
             try:
                 self.favourite = bool(self.favourite)    
@@ -416,92 +574,79 @@ class horse:
     def switchPosition(self):
         self.startingPosition = self.position
 
+    def prep(self, var, data):
+        try: 
+            data.append(var)
+        except:
+            data.append(None)
+        return data
+
+
+
+
     def getData(self):
         self.cleanUp()
         data = []
-
-        try: 
+        try:
             data.append(self.name)
         except:
             data.append(None)
-        try: 
+        try:
             data.append(self.jockey)
         except:
             data.append(None)
-        try: 
+        try:
             data.append(self.trainer)
         except:
             data.append(None)
-        try: 
+        try:
             data.append(self.age)
         except:
             data.append(None)
-        try: 
-            data.append(self.topspeed)
+        try:
+            data.append(self.weight)
         except:
             data.append(None)
-        #try: 
-        #    data.append(self.weight)
-        #except:
-        #    data.append(None)
-        #try: 
-        #    data.append(self.rating)
-        #except:
-        #    data.append(None)
-        try: 
-            data.append(self.price)
-        except:
-            data.append(None)
-        #try: 
-        #    data.append(self.country)
-        #except:
-        #    data.append(None)
-        try: 
+        try:
             data.append(self.firstWeight)
         except:
             data.append(None)
-        #try: 
-        #    data.append(self.posLength)
-        #except:
-        #    data.append(None)
-        #try: 
-        #    data.append(self.pedigree[0])
-        #except:
-        #    data.append(None)
-        #try: 
-        #    data.append(self.pedigree[1])
-        #except:
-        #    data.append(None)
-        #try: 
-        #    data.append(self.pedigree[2])
-        #except:
-        #    data.append(None)
-        #try: 
-        #    data.append(self.favourite)
-        #except:
-        #    data.append(None)
-        
-        try: 
-            data.append(self.startingPosition)
-        except:
-            data.append(None)
-        try: 
+        try:
             data.append(self.secondWeight)
         except:
             data.append(None)
-        try: 
-            data.append(self.RPR)
+        try:
+            data.append(self.rating)
         except:
             data.append(None)
-        #try: 
-        #    data.append(self.MR)
-        #except:
-        #    data.append("")
+        try:
+            data.append(self.price)
+        except:
+            data.append(None)
+        try:
+            data.append(self.form[0])
+        except:
+            data.append(None)
+        try:
+            data.append(self.form[1])
+        except:
+            data.append(None)
+        try:
+            data.append(self.form[2])
+        except:
+            data.append(None)
+        try:
+            data.append(self.form[3])
+        except:
+            data.append(None)
+        try:
+            data.append(self.form[4])
+        except:
+            data.append(None)
         try:
             data.append(self.position)
         except:
             data.append(None)
-        
         return data
 
     def processing(self):
@@ -525,34 +670,37 @@ class horse:
             self.country = "ENG"
 
     def convertWeights(self):
-        weight = str(self.firstWeight) + None
-        weight += str(self.weight[len(self.firstWeight):])
+        try:
+            self.firstWeight = int(self.weight.split("-")[0])
+            self.secondWeight = int(self.weight.split("-")[1])
+        except:
+            pass
 
-        self.weight = weight
-        self.firstWeight = int(weight.split(None)[0])
-        self.secondWeight = int(weight.split(None)[1])
+    def sortWeight(self):
+        self.firstWeight = self.weight.split("-")[0]
+        self.secondWeight = self.weight.split("-")[1]
 
         
 
     def convertPrice(self):
-        if "F" in self.price:
-            self.favourite = True
+        try:
+            if "F" in self.price:
+                self.favourite = True
+        except:
+            pass
         price = self.price.split("/")
         a = int(price[0].replace("F", ""), 10)
         b = int(price[1].replace("F", ""), 10)
         self.price = float(a/b)
 
     def print(self):
-        print("{:25s}{:25s}{:25s}{:10s}{:10s}{:10s}{:10s}{:10s}{:10s}{:10s}".format(self.name, 
-                                                                                    self.jockey, 
-                                                                                    self.trainer, 
-                                                                                    str(self.age), 
-                                                                                    str(self.topspeed), 
-                                                                                    str(self.weight), 
-                                                                                    str(self.rating), 
-                                                                                    str(self.price), 
-                                                                                    self.country, 
-                                                                                    self.posLength))
+        print("{:25s}{:25s}{:25s}{:10s}{:10s}{:10s}{:10s}".format(self.name, 
+                                                                    self.jockey, 
+                                                                    self.trainer, 
+                                                                    str(self.age), 
+                                                                    str(self.weight), 
+                                                                    str(self.rating), 
+                                                                    str(self.price)))
 
 
 
