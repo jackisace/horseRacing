@@ -62,13 +62,13 @@ def setPredictions(results):
     for r in tomorrowsRaces:
         for h in r.horses:
             h.prediction = float(results[i][0])
-            i += 1
-                
+            i += 1   
 
 def checkPredictions():
     money = 0
     wins = 0
-    losses = 0
+    consecutiveLosses = 0
+    highestConsecutiveLosses = 0
     for r in tomorrowsRaces:
         highest = None
         highestPrediction = 0.0
@@ -80,10 +80,16 @@ def checkPredictions():
         if highest.position == 1:
             money += highest.price
             wins += 1
+            
+            if consecutiveLosses > highestConsecutiveLosses:
+                highestConsecutiveLosses = consecutiveLosses
+            consecutiveLosses = 0
         else:
             money -= 1
-            losses += 1
-        print(wins, losses, money)
+            consecutiveLosses += 1
+            
+        print(wins, consecutiveLosses, money)
+    print("highest consecutive losses:", highestConsecutiveLosses)
 
 
 
