@@ -155,6 +155,7 @@ def checkPredictions():
                     mostMoneyLost = moneyLost
                 moneyLost = 0
                 consecutiveLosses = 0
+                st = "WIN "
             else:
                 losses += 1
                 globallosses += 1
@@ -163,7 +164,8 @@ def checkPredictions():
                 diffCost = diff / highest.price
                 moneyLost += diffCost
                 money -= diffCost
-            print("wins:{}    losses:{}    consecutive losses:{}    money:{}    diff:{}".format(wins, losses, consecutiveLosses, money, (highest.prediction - secondHighest.prediction)))
+                st = "LOSS"
+            print("{} wins:{}    losses:{}    consecutive losses:{}    money:{}    prediction:{}   diff:{}".format(st, wins, losses, consecutiveLosses, money, highest.prediction, (highest.prediction - secondHighest.prediction)))
         except:
             pass
 
@@ -321,23 +323,31 @@ for month in range(6,8):
 
 
         #try:
+        Training = False 
+        if Training:
+            ann = tf.keras.models.Sequential()
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=1, activation="sigmoid"))
+            ann.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+            ann.fit(x_train, y_train, batch_size = 500, epochs = 20)
 
-        ann = tf.keras.models.Sequential()
-        ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
-        ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
-        ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
-        ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
-        ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
-        ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
-        ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
-        ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
-        ann.add(tf.keras.layers.Dense(units=1, activation="sigmoid"))
-        ann.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
-        ann.fit(x_train, y_train, batch_size = 500, epochs = 20)
+
+            
+            with open('ann.pickle', 'wb') as f:
+                pickle.dump(ann, f)
+        else:
+            with open("ann.pickle", "rb") as f:
+                ann = pickle.load(f)
 
 
         results = ann.predict(x_pred)
-
 
 
         #money = checkResults(results)
