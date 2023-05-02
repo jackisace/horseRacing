@@ -1,12 +1,17 @@
-currentRaceId = 0
-
-racesMaster = []
-horsesMaster = []
-currentRace = None
 
 import pickle
 import requests
 from bs4 import BeautifulSoup
+
+currentRaceId = 0
+racesMaster = []
+currentRace = None
+horsesMaster = []
+
+
+
+
+
 
 def saveAll():
     with open('races.pickle', 'wb') as f:
@@ -15,6 +20,7 @@ def saveAll():
 def loadAll():
     with open('races.pickle', "rb") as f:
         racesMaster = pickle.load(f)
+
 
 
 
@@ -437,6 +443,8 @@ class race:
 
 
 
+
+
 class horse:
     def __init__(self, name, jockey, trainer, age, topspeed, weight, 
                 rating, price, country, firstWeight, posLength, pedigree, 
@@ -701,6 +709,7 @@ class horse:
                                                                     str(self.weight), 
                                                                     str(self.rating), 
                                                                     str(self.price)))
+
 
 
 
