@@ -148,13 +148,13 @@ def checkPredictions():
             if highest.price > 1:
                 continue
             
-            target = money + 1
+
 
             if highest.position == 1:
                 wins += 1
                 globalwins += 1
                 money = target
-                
+                target += 1
                 if moneyLost > mostMoneyLost:
                     mostMoneyLost = moneyLost
                 moneyLost = 0
@@ -169,7 +169,7 @@ def checkPredictions():
                 moneyLost += diffCost
                 money -= diffCost
                 st = "LOSS"
-            print("{} wins:{}    losses:{}    cons:{}    money:{}    pred:{}    2ndP:{}   diff:{}".format(st, wins, losses, consecutiveLosses, money, highest.prediction, second.prediction, (highest.prediction - secondHighest.prediction)))
+            print("{} wins:{}    losses:{}    cons:{}    money:{}    pred:{}    2ndP:{}   diff:{}".format(st, wins, losses, consecutiveLosses, money, highest.prediction, secondHighest.prediction, (highest.prediction - secondHighest.prediction)))
         except:
             pass
 
