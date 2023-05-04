@@ -168,7 +168,7 @@ def checkPredictions():
                 wins += 1
                 globalwins += 1
                 money = target
-                target += 1
+                target = (target+1) * 1.01
                 if moneyLost > mostMoneyLost:
                     mostMoneyLost = moneyLost
                 moneyLost = 0
