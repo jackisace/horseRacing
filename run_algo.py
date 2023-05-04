@@ -114,6 +114,11 @@ def checkPredictions():
     global mostMoneyLost 
     global streaks 
     global highestConfidence 
+# Runners	Minimum each-way places offered
+# 1-4	                              None
+# 5-7	                              2
+# 8 or more	                        3
+# 16 or more (handicap races only)	4
     
     streaks = []
 #    pdb.set_trace()
@@ -143,14 +148,23 @@ def checkPredictions():
             
             if not highest:
                 continue
-            if highest.prediction < 0.5:
-                continue
-            if highest.price > 1:
-                continue
+            #if highest.prediction < 0.5:
+            #    continue
+            #if highest.price > 1:
+            #    continue
+
+            placeBet = 1
+
+            if len(r.horses) > 4:
+              placeBet = 2
+            if len(r.horses) > 7:
+              placeBet = 3
+            if len(r.horses) > 15:
+              placeBet = 4
             
+            placeBet += 1
 
-
-            if highest.position == 1:
+            if highest.position < placeBet:
                 wins += 1
                 globalwins += 1
                 money = target
@@ -166,6 +180,7 @@ def checkPredictions():
                 consecutiveLosses += 1
                 diff = float(target - money)
                 diffCost = diff / highest.price
+                diffCost *= placeBet - 1
                 moneyLost += diffCost
                 money -= diffCost
                 st = "LOSS"
