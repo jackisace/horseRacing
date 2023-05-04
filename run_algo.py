@@ -148,11 +148,13 @@ def checkPredictions():
             if highest.price > 1:
                 continue
             
+            target = money + 1
+
             if highest.position == 1:
                 wins += 1
                 globalwins += 1
                 money = target
-                target += 1
+                
                 if moneyLost > mostMoneyLost:
                     mostMoneyLost = moneyLost
                 moneyLost = 0
@@ -167,7 +169,7 @@ def checkPredictions():
                 moneyLost += diffCost
                 money -= diffCost
                 st = "LOSS"
-            print("{} wins:{}    losses:{}    consecutive losses:{}    money:{}    prediction:{}   diff:{}".format(st, wins, losses, consecutiveLosses, money, highest.prediction, (highest.prediction - secondHighest.prediction)))
+            print("{} wins:{}    losses:{}    cons:{}    money:{}    pred:{}    2ndP:{}   diff:{}".format(st, wins, losses, consecutiveLosses, money, highest.prediction, second.prediction, (highest.prediction - secondHighest.prediction)))
         except:
             pass
 
@@ -328,25 +330,17 @@ for month in range(6,8):
         Training = True 
         if Training:
             ann = tf.keras.models.Sequential()
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
-            ann.add(tf.keras.layers.Dense(units=80, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
+            ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
             ann.add(tf.keras.layers.Dense(units=1, activation="sigmoid"))
             ann.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
-            ann.fit(x_train, y_train, batch_size = 500, epochs = 40)
+            ann.fit(x_train, y_train, batch_size = 500, epochs = 20)
 
 
             
