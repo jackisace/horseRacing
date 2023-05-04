@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import datetime
 
-from IPython import embed
+#from IPython import embed
 import pdb
 
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
@@ -28,6 +28,8 @@ import pandas as pd
 
 #import matplotlib.pyplot as plt
 import tensorflow as tf
+
+
 
 tomorrowsRaces = []
 races = []
@@ -323,7 +325,7 @@ for month in range(6,8):
 
 
         #try:
-        Training = False 
+        Training = True 
         if Training:
             ann = tf.keras.models.Sequential()
             ann.add(tf.keras.layers.Dense(units=40, activation="relu"))
